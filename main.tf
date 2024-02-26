@@ -53,6 +53,7 @@ module "masters" {
 }
 
 module "workers" {
+  count               = var.worker_count > 0 ? 1 : 0
   source              = "./modules/worker"
   worker_count        = var.worker_count
   vnet_id             = module.vnet.id
@@ -69,6 +70,7 @@ module "workers" {
 }
 
 module "windows_workers" {
+  count               = var.windows_worker_count > 0 ? 1 : 0
   source              = "./modules/windows_worker"
   worker_count        = var.windows_worker_count
   vnet_id             = module.vnet.id
@@ -97,8 +99,8 @@ locals {
       role             = "manager"
     }
   ]
-  workers = [
-    for ip in module.workers.public_ips : {
+  workers = var.worker_count > 0 ? [
+    for ip in module.workers[0].public_ips : {
       ssh = {
         address = ip
         user    = "ubuntu"
@@ -107,20 +109,20 @@ locals {
       privateInterface = "eth0"
       role             = "worker"
     }
-  ]
-  windows_workers = [
-    for ip in module.windows_workers.public_ips : {
+  ] : []
+  windows_workers = var.windows_worker_count > 0 ? [
+    for ip in module.windows_workers[0].public_ips : {
       winRM = {
         address  = ip
         user     = var.windows_admin_username
-        password = module.windows_workers.windows_password
+        password = module.windows_workers[0].windows_password
         useHTTPS = true
         insecure = true
       }
       privateInterface = "Ethernet"
       role             = "worker"
     }
-  ]
+  ] : []
 }
 
 locals {
@@ -159,6 +161,6 @@ output "mke_cluster" {
 output "loadbalancers" {
   value = {
     MasterLB  = module.masters.lb_dns_name
-    WorkersLB = module.workers.lb_dns_name
+    WorkersLB = var.worker_count > 0 ? module.workers[0].lb_dns_name : ""
   }
 }

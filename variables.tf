@@ -1,65 +1,81 @@
 variable "cluster_name" {
-  default = ""
+  default     = ""
+  description = "The name of the cluster"
 }
 
 variable "mke_version" {
-  default = "3.6.3"
+  default     = "3.6.3"
+  description = "The version of Mirantis Kubernetes Engine"
 }
 
 variable "mcr_version" {
-  default = "23.0.3"
+  default     = "23.0.3"
+  description = "The version of Mirantis Container Runtime"
 }
 
 variable "azure_region" {
-  default = "eastus"
+  default     = "eastus"
+  description = "The Azure region"
 }
 
 variable "azure_environment" {
-  default = "public"
+  default     = "public"
+  description = "The Azure environment"
 }
 
 variable "vnet_name" {
-  default = "virtualNet"
+  default     = "virtualNet"
+  description = "The name of the virtual network"
 }
 
 variable "vnet_cidr" {
-  default = "172.31.0.0/16"
+  default     = "172.31.0.0/16"
+  description = "The address space that is used by the virtual network"
 }
 
 variable "address_space" {
-  default = "172.31.0.0/16"
+  default     = "172.31.0.0/16"
+  description = "The address space that is used by the virtual network"
 }
 
 variable "admin_password" {
-  default = "orcaorcaorca"
+  default     = ""
+  description = "The password for the admin user"
 }
 
 variable "master_count" {
-  default = 1
+  default     = 1
+  description = "The number of master nodes"
 }
 
 variable "worker_count" {
-  default = 3
+  default     = 3
+  description = "The number of worker nodes"
 }
 
 variable "windows_worker_count" {
-  default = 0
+  default     = 0
+  description = "The number of Windows worker nodes"
 }
 
 variable "master_type" {
-  default = "Standard_DS3_v2"
+  default     = "Standard_DS3_v2"
+  description = "The type of the master node"
 }
 
 variable "worker_type" {
-  default = "Standard_DS3_v2"
+  default     = "Standard_DS3_v2"
+  description = "The type of the worker node"
 }
 
 variable "master_volume_size" {
-  default = 100
+  default     = 100
+  description = "The size of the master node volume"
 }
 
 variable "worker_volume_size" {
-  default = 100
+  default     = 100
+  description = "The size of the worker node volume"
 }
 
 variable "image_ubuntu1804" {
@@ -85,7 +101,8 @@ variable "image_windows2019" {
 }
 
 variable "windows_admin_username" {
-  default = "MirantisAdmin"
+  default     = "MirantisAdmin"
+  description = "The username for the Windows admin user"
 }
 
 variable "tags" {
